@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InternetShop
 {
@@ -33,7 +34,7 @@ namespace InternetShop
 
             }
             if (index != -1) DataBase.Categories[index].ShowCategory();
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Category with current ID isn't exist!");
         }
         public void ShowCategory(string title)
         {
@@ -44,7 +45,7 @@ namespace InternetShop
 
             }
             if (index != -1) DataBase.Categories[index].ShowCategory();
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Category with current title isn't exist!");
         }
         public void ShowAllCategories()
         {
@@ -84,7 +85,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Categories[index].SetTitle(newTitle); }
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Category with current ID isn't exist!");
 
         }
         public void UpdateCategoryTitle(string oldTitle, string newTitle)
@@ -96,7 +97,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Categories[index].SetTitle(newTitle); }
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Category with current title isn't exist!");
 
         }
         public void DeleteCategory(int id)
@@ -108,7 +109,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Categories.Remove(DataBase.Categories[index]); }
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Category with current ID isn't exist!");
 
         }
         public void DeleteCategory(string title)
@@ -120,7 +121,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Categories.Remove(DataBase.Categories[index]); }
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Category with current title isn't exist!");
 
         }
         public void ClearCategoryList() { DataBase.Categories.Clear(); }
@@ -148,7 +149,7 @@ namespace InternetShop
 
             }
             if (index != -1) DataBase.Manufacturers[index].ShowManufacturer();
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Manufacturer with current ID isn't exist!");
         }
         public void ShowManufacturer(string title)
         {
@@ -159,7 +160,7 @@ namespace InternetShop
 
             }
             if (index != -1) DataBase.Manufacturers[index].ShowManufacturer();
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Manufacturer with current title isn't exist!");
         }
         public void ShowAllManufacturers()
         {
@@ -199,7 +200,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Manufacturers[index].SetTitle(newTitle); }
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Manufacturer with current ID isn't exist!");
 
         }
         public void UpdateManufacturerTitle(string oldTitle, string newTitle)
@@ -211,7 +212,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Manufacturers[index].SetTitle(newTitle); }
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Manufacturer with current title isn't exist!");
 
         }
         public void DeleteManufacturer(int id)
@@ -223,7 +224,7 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Manufacturers.Remove(DataBase.Manufacturers[index]); }
-            else Console.WriteLine("Item with current ID isn't exist!");
+            else Console.WriteLine("Manufacturer with current ID isn't exist!");
 
         }
         public void DeleteManufacturer(string title)
@@ -235,10 +236,207 @@ namespace InternetShop
 
             }
             if (index != -1) { DataBase.Manufacturers.Remove(DataBase.Manufacturers[index]); }
-            else Console.WriteLine("Item with current title isn't exist!");
+            else Console.WriteLine("Manufacturer with current title isn't exist!");
 
         }
-        public void ClearManufacturerList() { DataBase.Manufacturers.Clear(); } 
+        public void ClearManufacturerList() { DataBase.Manufacturers.Clear(); }
+        #endregion
+
+        #region METHODS FOR CUSTOMER LIST
+        public void SortCustomer()
+        {
+            DataBase.Customers.Sort();
+        }
+        public void AddCustomer(string name, string phoneNumber)
+        {
+            Customer customer = new Customer(name, phoneNumber);
+            if (DataBase.Customers.Count == 0) customer.Id = 1;
+            else customer.Id = DataBase.Customers[DataBase.Customers.Count - 1].Id + 1;
+            DataBase.Customers.Add(customer);
+            DataBase.Customers.Sort();
+        }
+        public void ShowCustomerUseId(int id)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.Id == id) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) DataBase.Customers[index].ShowCustomer();
+            else Console.WriteLine("Customer with current ID isn't exist!");
+        }
+        public void ShowCustomerUseName(string name)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetName() == name) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) DataBase.Customers[index].ShowCustomer();
+            else Console.WriteLine("Customer with current name isn't exist!");
+        }
+        public void ShowCustomerUsePhoneNumber(string phoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetPhoneNumber() == phoneNumber) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) DataBase.Customers[index].ShowCustomer();
+            else Console.WriteLine("Customer with current name isn't exist!");
+        }
+        public void ShowAllCustomers()
+        {
+            foreach (Customer customer in DataBase.Customers)
+            {
+                customer.ShowCustomer();
+            }
+        }
+        public Customer GetCustomerUseId(int id)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.Id == id) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) return DataBase.Customers[index];
+            else return null;
+        }
+        public Customer GetCustomerUseName(string name)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetName() == name) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) return DataBase.Customers[index];
+            else return null;
+        }
+        public Customer GetCustomerUsePhoneNumber(string phoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetPhoneNumber() == phoneNumber) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) return DataBase.Customers[index];
+            else return null;
+        }
+        public void UpdateCustomerNameUseId(int id, string newName)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.Id == id) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetName(newName); }
+            else Console.WriteLine("Customer with current ID isn't exist!");
+
+        }
+        public void UpdateCustomerPhoneNumberUseId(int id, string newPhoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.Id == id) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetPhoneNumber(newPhoneNumber); }
+            else Console.WriteLine("Customer with current ID isn't exist!");
+
+        }
+        public void UpdateCustomerNameUseName(string oldName, string newName)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetName() == oldName) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetName(newName); }
+            else Console.WriteLine("Customer with current name isn't exist!");
+
+        }
+        public void UpdateCustomerPhoneNumberUseName(string name, string newPhoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetName() == name) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetPhoneNumber(newPhoneNumber); }
+            else Console.WriteLine("Customer with current name isn't exist!");
+
+        }
+        public void UpdateCustomerNameUsePhoneNumber(string phoneNumber, string newName)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetPhoneNumber() == phoneNumber) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetName(newName); }
+            else Console.WriteLine("Customer with current phone number isn't exist!");
+
+        }
+        public void UpdateCustomerPhoneNumberUsePhoneNumber(string oldPhoneNumber, string newPhoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetPhoneNumber() == oldPhoneNumber) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers[index].SetPhoneNumber(newPhoneNumber); }
+            else Console.WriteLine("Customer with current phone number isn't exist!");
+
+        }
+        public void DeleteCustomerUseId(int id)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.Id == id) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers.Remove(DataBase.Customers[index]); }
+            else Console.WriteLine("Customer with current ID isn't exist!");
+
+        }
+        public void DeleteCustomerUseName(string name)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetName() == name) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers.Remove(DataBase.Customers[index]); }
+            else Console.WriteLine("Customer with current name isn't exist!");
+
+        }
+        public void DeleteCustomerUsePhoneNumber(string phoneNumber)
+        {
+            int index = -1;
+            foreach (Customer customer in DataBase.Customers)
+            {
+                if (customer.GetPhoneNumber() == phoneNumber) { index = DataBase.Customers.IndexOf(customer); break; }
+
+            }
+            if (index != -1) { DataBase.Customers.Remove(DataBase.Customers[index]); }
+            else Console.WriteLine("Customer with current phone number isn't exist!");
+
+        }
+        public void ClearCustomersList() { DataBase.Customers.Clear(); } 
         #endregion
 
 

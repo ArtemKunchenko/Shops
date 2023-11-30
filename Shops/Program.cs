@@ -28,6 +28,11 @@ namespace Shops
             serviceRozetka.AddManufacturer("Acer");
             serviceRozetka.ShowAllManufacturers();
             Console.WriteLine();
+            serviceRozetka.AddCustomer("Jim", "095-950-99-55");
+            serviceRozetka.AddCustomer("Katty", "066-660-66-66");
+            serviceRozetka.AddCustomer("Mike", "050-500-50-50");
+            serviceRozetka.ShowAllCustomers();
+            Console.WriteLine();
 
             Console.ReadKey();
         }
