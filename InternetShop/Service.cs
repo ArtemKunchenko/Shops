@@ -10,6 +10,7 @@ namespace InternetShop
     {
         private DBContext DataBase;
         public Service(DBContext dataBase) { DataBase = dataBase; }
+
         #region METHODS FOR CATEGORY LIST
         public void SortCategory()
         {
@@ -123,7 +124,127 @@ namespace InternetShop
 
         }
         public void ClearCategoryList() { DataBase.Categories.Clear(); }
-    } 
-    #endregion
+        #endregion
+
+        #region METHODS FOR MANUFACTURER LIST
+        public void SortManufacturer()
+        {
+            DataBase.Manufacturers.Sort();
+        }
+        public void AddManufacturer(string title)
+        {
+            Manufacturer manufacturer = new Manufacturer(title);
+            if (DataBase.Manufacturers.Count == 0) manufacturer.Id = 1;
+            else manufacturer.Id = DataBase.Manufacturers[DataBase.Manufacturers.Count - 1].Id + 1;
+            DataBase.Manufacturers.Add(manufacturer);
+            DataBase.Manufacturers.Sort();
+        }
+        public void ShowManufacturer(int id)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.Id == id) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) DataBase.Manufacturers[index].ShowManufacturer();
+            else Console.WriteLine("Item with current ID isn't exist!");
+        }
+        public void ShowManufacturer(string title)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.GetTitle() == title) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) DataBase.Manufacturers[index].ShowManufacturer();
+            else Console.WriteLine("Item with current title isn't exist!");
+        }
+        public void ShowAllManufacturers()
+        {
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                manufacturer.ShowManufacturer();
+            }
+        }
+        public Manufacturer GetManufacturer(int id)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.Id == id) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) return DataBase.Manufacturers[index];
+            else return null;
+        }
+        public Manufacturer GetManufacturer(string title)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.GetTitle() == title) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) return DataBase.Manufacturers[index];
+            else return null;
+        }
+        public void UpdateManufacturerTitle(int id, string newTitle)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.Id == id) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) { DataBase.Manufacturers[index].SetTitle(newTitle); }
+            else Console.WriteLine("Item with current ID isn't exist!");
+
+        }
+        public void UpdateManufacturerTitle(string oldTitle, string newTitle)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.GetTitle() == oldTitle) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) { DataBase.Manufacturers[index].SetTitle(newTitle); }
+            else Console.WriteLine("Item with current title isn't exist!");
+
+        }
+        public void DeleteManufacturer(int id)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.Id == id) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) { DataBase.Manufacturers.Remove(DataBase.Manufacturers[index]); }
+            else Console.WriteLine("Item with current ID isn't exist!");
+
+        }
+        public void DeleteManufacturer(string title)
+        {
+            int index = -1;
+            foreach (Manufacturer manufacturer in DataBase.Manufacturers)
+            {
+                if (manufacturer.GetTitle() == title) { index = DataBase.Manufacturers.IndexOf(manufacturer); break; }
+
+            }
+            if (index != -1) { DataBase.Manufacturers.Remove(DataBase.Manufacturers[index]); }
+            else Console.WriteLine("Item with current title isn't exist!");
+
+        }
+        public void ClearManufacturerList() { DataBase.Manufacturers.Clear(); } 
+        #endregion
+
+
+    }
+
+
+
 
 }

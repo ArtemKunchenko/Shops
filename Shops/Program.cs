@@ -15,15 +15,19 @@ namespace Shops
             serviceRozetka.AddCategory("Laptop");
             serviceRozetka.ShowAllCategories();
             Console.WriteLine();
-            serviceRozetka.UpdateCategoryTitle("Phone", "Phones");
-            serviceRozetka.ShowAllCategories();
+            //serviceRozetka.UpdateCategoryTitle("Phone", "Phones");
+            //serviceRozetka.ShowAllCategories();
+            //Console.WriteLine();
+            //serviceRozetka.DeleteCategory(2);
+            //serviceRozetka.ShowAllCategories();
+            //Console.WriteLine();
+            //serviceRozetka.AddCategory("Tablet");
+            //serviceRozetka.ShowAllCategories();
+            serviceRozetka.AddManufacturer("Apple");
+            serviceRozetka.AddManufacturer("Samsung");
+            serviceRozetka.AddManufacturer("Acer");
+            serviceRozetka.ShowAllManufacturers();
             Console.WriteLine();
-            serviceRozetka.DeleteCategory(2);
-            serviceRozetka.ShowAllCategories();
-            Console.WriteLine();
-            serviceRozetka.AddCategory("Tablet");
-            serviceRozetka.ShowAllCategories();
-
 
             Console.ReadKey();
         }
