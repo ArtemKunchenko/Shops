@@ -465,8 +465,8 @@ namespace InternetShop
             {
                 string displayOrder =
                     $"ID: {DataBase.Orders[index].Id}\t Date: {DataBase.Orders[index].GetDate()}\n" +
-                    $"Product title: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetTitle()}\t Cost: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetCost()}\n" +
-                    $"Customer name: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\t Phone number: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\n";
+                    $"Product title: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetTitle()}\t Cost: ${DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetCost()}\n" +
+                    $"Customer name: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\t Phone number: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetPhoneNumber()}\n";
                 Console.WriteLine(displayOrder);
 
             }
@@ -484,8 +484,8 @@ namespace InternetShop
             {
                 string displayOrder =
                     $"ID: {DataBase.Orders[index].Id}\t Date: {DataBase.Orders[index].GetDate()}\n" +
-                    $"Product title: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetTitle()}\t Cost: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetCost()}\n" +
-                    $"Customer name: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\t Phone number: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\n";
+                    $"Product title: {DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetTitle()}\t Cost: ${DataBase.Products[DataBase.Products.IndexOf(GetProduct(DataBase.Orders[index].ProductId))].GetCost()}\n" +
+                    $"Customer name: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetName()}\t Phone number: {DataBase.Customers[DataBase.Customers.IndexOf(GetCustomerUseId(DataBase.Orders[index].CustomerId))].GetPhoneNumber()}\n";
                 Console.WriteLine(displayOrder);
 
             }
@@ -568,10 +568,86 @@ namespace InternetShop
             else Console.WriteLine("Order with current date isn't exist!");
 
         }
-        public void ClearOrderList() { DataBase.Orders.Clear(); } 
+        public void ClearOrderList() { DataBase.Orders.Clear(); }
         #endregion
 
         #region METHODS FOR PRODUCT LIST
+        public void SortProduct()
+        {
+            DataBase.Products.Sort();
+        }
+        public void AddProduct(string title, double cost, Category category, Manufacturer manufacturer)
+        {
+            Product product = new Product(title, cost, category, manufacturer);
+            if (DataBase.Products.Count == 0) product.Id = 1;
+            else product.Id = DataBase.Products[DataBase.Products.Count - 1].Id + 1;
+            DataBase.Products.Add(product);
+            DataBase.Products.Sort();
+        }
+        public void ShowProduct(int id)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.Id == id) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1)
+            {
+                string displayProduct =
+                    $"ID: {DataBase.Products[index].Id}\t Title: {DataBase.Products[index].GetTitle()}\t Cost: ${DataBase.Products[index].GetCost()}\n" +
+                    $"Manufacturer: {DataBase.Manufacturers[DataBase.Manufacturers.IndexOf(GetManufacturer(DataBase.Products[index].ManufacturerId))].GetTitle()} \n" +
+                    $"Category: {DataBase.Categories[DataBase.Categories.IndexOf(GetCategory(DataBase.Products[index].CategoryId))].GetTitle()}\n";
+                Console.WriteLine(displayProduct);
+
+            }
+            else Console.WriteLine("Product with current ID isn't exist!");
+        }
+        public void ShowProduct(string title)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetTitle() == title) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1)
+            {
+                string displayProduct =
+                     $"ID: {DataBase.Products[index].Id}\t Title: {DataBase.Products[index].GetTitle()}\t Cost: $ {DataBase.Products[index].GetCost()}\n" +
+                     $"Manufacturer: {DataBase.Manufacturers[DataBase.Manufacturers.IndexOf(GetManufacturer(DataBase.Products[index].ManufacturerId))].GetTitle()} \n" +
+                     $"Category: {DataBase.Categories[DataBase.Categories.IndexOf(GetCategory(DataBase.Products[index].CategoryId))].GetTitle()}\n";
+                Console.WriteLine(displayProduct);
+
+            }
+            else Console.WriteLine("Product with current title isn't exist!");
+        }
+        public void ShowProduct(double cost)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetCost() == cost) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1)
+            {
+                string displayProduct =
+                     $"ID: {DataBase.Products[index].Id}\t Title: {DataBase.Products[index].GetTitle()}\t Cost: $ {DataBase.Products[index].GetCost()} \n" +
+                     $"Manufacturer: {DataBase.Manufacturers[DataBase.Manufacturers.IndexOf(GetManufacturer(DataBase.Products[index].ManufacturerId))].GetTitle()} \n" +
+                     $"Category: {DataBase.Categories[DataBase.Categories.IndexOf(GetCategory(DataBase.Products[index].CategoryId))].GetTitle()}\n";
+                Console.WriteLine(displayProduct);
+
+            }
+            else Console.WriteLine("Product with current cost isn't exist!");
+        }
+        public void ShowAllProducts()
+        {
+            foreach (Product product in DataBase.Products)
+            {
+                ShowProduct(product.Id);
+            }
+        }
         public Product GetProduct(int id)
         {
             int index = -1;
@@ -605,7 +681,115 @@ namespace InternetShop
             if (index != -1) return DataBase.Products[index];
             else return null;
         }
+        public void UpdateProductTitle(int id, string newTitle)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.Id == id) { index = DataBase.Products.IndexOf(product); break; }
 
+            }
+            if (index != -1) { DataBase.Products[index].SetTitle(newTitle); }
+            else Console.WriteLine("Product with current ID isn't exist!");
+
+        }
+        public void UpdateProductTitle(double cost, string newTitle)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetCost() == cost) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products[index].SetTitle(newTitle); }
+            else Console.WriteLine("Product with current cost isn't exist!");
+
+        }
+        public void UpdateProductTitle(string oldTitle, string newTitle)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetTitle() == oldTitle) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products[index].SetTitle(newTitle); }
+            else Console.WriteLine("Product with current title isn't exist!");
+
+        }
+        public void UpdateProductCost(int id, double newCost)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.Id == id) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products[index].SetCost(newCost); }
+            else Console.WriteLine("Product with current ID isn't exist!");
+
+        }
+        public void UpdateProductCost(double oldCost, double newCost)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetCost() == oldCost) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products[index].SetCost(newCost); }
+            else Console.WriteLine("Product with current cost isn't exist!");
+
+        }
+        public void UpdateProductCost(string title, double newCost)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetTitle() == title) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products[index].SetCost(newCost); }
+            else Console.WriteLine("Product with current title isn't exist!");
+
+        }
+        public void DeleteProduct(int id)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.Id == id) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products.Remove(DataBase.Products[index]); }
+            else Console.WriteLine("Product with current ID isn't exist!");
+
+        }
+        public void DeleteProduct(string title)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetTitle() == title) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products.Remove(DataBase.Products[index]); }
+            else Console.WriteLine("Product with current title isn't exist!");
+
+        }
+        public void DeleteProduct(double cost)
+        {
+            int index = -1;
+            foreach (Product product in DataBase.Products)
+            {
+                if (product.GetCost() == cost) { index = DataBase.Products.IndexOf(product); break; }
+
+            }
+            if (index != -1) { DataBase.Products.Remove(DataBase.Products[index]); }
+            else Console.WriteLine("Product with current cost isn't exist!");
+
+        }
+        public void ClearProductList() { DataBase.Products.Clear(); }
 
 
         #endregion
