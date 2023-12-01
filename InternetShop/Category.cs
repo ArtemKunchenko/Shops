@@ -19,6 +19,7 @@ namespace InternetShop
         public void SetTitle(string title) {  Title = title; }
         public void ShowCategory()
         {
+
             Console.WriteLine("ID: {0}\t Title: {1}", Id, Title);
         }
         public int CompareTo(Category? other)
