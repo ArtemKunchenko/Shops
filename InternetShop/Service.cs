@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -22,7 +23,17 @@ namespace InternetShop
         {
             Category category = new Category(title);
             if (DataBase.Categories.Count == 0) category.Id = 1;
-            else category.Id = DataBase.Categories[DataBase.Categories.Count - 1].Id + 1;
+            else
+            {
+                int id = 0, i=1;
+                foreach (Category c in DataBase.Categories)
+                {
+                    if (c.Id != i) { id = i; break; }
+                    i++;
+                }
+                if(id!=0) category.Id = id;
+                else category.Id = DataBase.Categories[DataBase.Categories.Count - 1].Id + 1;
+            }
             DataBase.Categories.Add(category);
             DataBase.Categories.Sort();
         }
@@ -137,7 +148,18 @@ namespace InternetShop
         {
             Manufacturer manufacturer = new Manufacturer(title);
             if (DataBase.Manufacturers.Count == 0) manufacturer.Id = 1;
-            else manufacturer.Id = DataBase.Manufacturers[DataBase.Manufacturers.Count - 1].Id + 1;
+            else
+            {
+                int id = 0, i = 1;
+                foreach (Manufacturer m in DataBase.Manufacturers)
+                {
+                    if (m.Id != i) { id = i; break; }
+                    i++;
+                }
+                if (id != 0) manufacturer.Id = id;
+                else manufacturer.Id = DataBase.Manufacturers[DataBase.Manufacturers.Count - 1].Id + 1;
+            }
+            
             DataBase.Manufacturers.Add(manufacturer);
             DataBase.Manufacturers.Sort();
         }
@@ -252,7 +274,17 @@ namespace InternetShop
         {
             Customer customer = new Customer(name, phoneNumber);
             if (DataBase.Customers.Count == 0) customer.Id = 1;
-            else customer.Id = DataBase.Customers[DataBase.Customers.Count - 1].Id + 1;
+            else
+            {
+                int id = 0, i = 1;
+                foreach (Customer c in DataBase.Customers)
+                {
+                    if (c.Id != i) { id = i; break; }
+                    i++;
+                }
+                if (id != 0) customer.Id = id;
+                else customer.Id = DataBase.Customers[DataBase.Customers.Count - 1].Id + 1;
+            }          
             DataBase.Customers.Add(customer);
             DataBase.Customers.Sort();
         }
@@ -449,7 +481,17 @@ namespace InternetShop
         {
             Order order = new Order(date, product, customer);
             if (DataBase.Orders.Count == 0) order.Id = 1;
-            else order.Id = DataBase.Orders[DataBase.Orders.Count - 1].Id + 1;
+            else
+            {
+                int id = 0, i = 1;
+                foreach (Order o in DataBase.Orders)
+                {
+                    if (o.Id != i) { id = i; break; }
+                    i++;
+                }
+                if (id != 0) order.Id = id;
+                else order.Id = DataBase.Orders[DataBase.Orders.Count - 1].Id + 1;
+            }
             DataBase.Orders.Add(order);
             DataBase.Orders.Sort();
         }
@@ -580,7 +622,17 @@ namespace InternetShop
         {
             Product product = new Product(title, cost, category, manufacturer);
             if (DataBase.Products.Count == 0) product.Id = 1;
-            else product.Id = DataBase.Products[DataBase.Products.Count - 1].Id + 1;
+            else
+            {
+                int id = 0, i = 1;
+                foreach (Product p in DataBase.Products)
+                {
+                    if (p.Id != i) { id = i; break; }
+                    i++;
+                }
+                if (id != 0) product.Id = id;
+                else product.Id = DataBase.Products[DataBase.Products.Count - 1].Id + 1;
+            }           
             DataBase.Products.Add(product);
             DataBase.Products.Sort();
         }

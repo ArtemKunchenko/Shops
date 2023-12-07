@@ -7,6 +7,8 @@ namespace Shops
     {
         static void Main(string[] args)
         {
+            DateTime thisDay = DateTime.Today;
+            string orderDate = thisDay.ToString("D");
             DBContext rozetka = new DBContext();
             Service serviceRozetka = new Service(rozetka);
 
@@ -15,15 +17,24 @@ namespace Shops
             serviceRozetka.AddCategory("Laptops");
             Console.WriteLine("-----------------------ALL CATEGORIES-----------------------------");
             serviceRozetka.ShowAllCategories();
+            ////Console.WriteLine();
+            ////serviceRozetka.DeleteCategory(2);
+            ////serviceRozetka.ShowAllCategories();
+            ////Console.WriteLine();
+            ////serviceRozetka.AddCategory("Charger");
+            ////serviceRozetka.ShowAllCategories();
+            ////Console.WriteLine();
+            ////serviceRozetka.AddCategory("Powerbank");
+            ////serviceRozetka.ShowAllCategories();
             Console.WriteLine("-----------------------ALL MANUFACTURERS--------------------------");
-            //serviceRozetka.UpdateCategoryTitle("Phone", "Phones");
-            //serviceRozetka.ShowAllCategories();
-            //Console.WriteLine();
-            //serviceRozetka.DeleteCategory(2);
-            //serviceRozetka.ShowAllCategories();
-            //Console.WriteLine();
-            //serviceRozetka.AddCategory("Tablet");
-            //serviceRozetka.ShowAllCategories();
+            ////serviceRozetka.UpdateCategoryTitle("Phone", "Phones");
+            ////serviceRozetka.ShowAllCategories();
+            ////Console.WriteLine();
+            ////serviceRozetka.DeleteCategory(2);
+            ////serviceRozetka.ShowAllCategories();
+            ////Console.WriteLine();
+            ////serviceRozetka.AddCategory("Tablet");
+            ////serviceRozetka.ShowAllCategories();
             serviceRozetka.AddManufacturer("Apple");
             serviceRozetka.AddManufacturer("Samsung");
             serviceRozetka.AddManufacturer("Acer");
@@ -39,9 +50,9 @@ namespace Shops
             serviceRozetka.AddProduct("Aspire 7", 800, serviceRozetka.GetCategory("Laptops"), serviceRozetka.GetManufacturer("Acer"));
             serviceRozetka.ShowAllProducts();
             Console.WriteLine("-----------------------ALL ORDERS--------------------------------");
-            serviceRozetka.AddOrder("31.11.2023", serviceRozetka.GetProduct(1), serviceRozetka.GetCustomerUseName("Jim"));
-            serviceRozetka.AddOrder("01.12.2023", serviceRozetka.GetProduct(2), serviceRozetka.GetCustomerUseName("Katty"));
-            serviceRozetka.AddOrder("02.12.2023", serviceRozetka.GetProduct(3), serviceRozetka.GetCustomerUseName("Mike"));
+            serviceRozetka.AddOrder(orderDate, serviceRozetka.GetProduct(1), serviceRozetka.GetCustomerUseName("Jim"));
+            serviceRozetka.AddOrder(orderDate, serviceRozetka.GetProduct(2), serviceRozetka.GetCustomerUseName("Katty"));
+            serviceRozetka.AddOrder(orderDate, serviceRozetka.GetProduct(3), serviceRozetka.GetCustomerUseName("Mike"));
             serviceRozetka.ShowAllOrders();
 
             Console.ReadKey();
